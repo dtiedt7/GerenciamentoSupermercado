@@ -48,7 +48,10 @@ public class TelaLogin extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		add(btnNewButton, "cell 2 7,growx");
+		add(btnNewButton, "cell 1 7,growx");
+		
+		JButton btCadastrar = new JButton("Cadastrar");
+		add(btCadastrar, "cell 3 7,growx");
 		
 	}
 
