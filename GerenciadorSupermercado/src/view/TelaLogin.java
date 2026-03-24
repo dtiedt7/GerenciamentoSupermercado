@@ -26,29 +26,34 @@ public class TelaLogin extends JPanel {
 		add(lblNewLabel, "cell 1 1 3 1,alignx center,growy");
 		
 		JLabel lblNewLabel_1 = new JLabel("Usuário");
-		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		add(lblNewLabel_1, "cell 1 3,alignx center,growy");
 		
 		tfUsuario = new JTextField();
-		tfUsuario.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		tfUsuario.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		add(tfUsuario, "cell 3 3,growx");
 		tfUsuario.setColumns(10);
 		
 		JLabel lblNewLabel_2 = new JLabel("CPF");
-		lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		add(lblNewLabel_2, "cell 1 5,alignx center,growy");
 		
 		tfCPF = new JTextField();
-		tfCPF.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		tfCPF.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		add(tfCPF, "cell 3 5,growx");
 		tfCPF.setColumns(10);
 		
-		JButton btnNewButton = new JButton("Logar");
-		btnNewButton.addActionListener(new ActionListener() {
+		JButton btCadastrarUsuario = new JButton("Cadastrar");
+		btCadastrarUsuario.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		add(btCadastrarUsuario, "cell 1 7,alignx center");
+		
+		JButton btLogin = new JButton("Logar");
+		btLogin.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		btLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		add(btnNewButton, "cell 2 7,growx");
+		add(btLogin, "cell 3 7,growx");
 		
 	}
 
