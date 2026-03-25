@@ -8,6 +8,7 @@ import java.awt.BorderLayout;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JButton;
+import java.awt.Color;
 
 public class TelaCompra extends JPanel {
 
@@ -19,9 +20,11 @@ public class TelaCompra extends JPanel {
 	 * Create the panel.
 	 */
 	public TelaCompra() {
+		setBackground(new Color(141, 141, 141));
 		setLayout(new MigLayout("", "[grow][grow][grow][grow][grow]", "[grow][grow][grow][grow][grow][grow][grow]"));
 		
 		JLabel lbTitulo = new JLabel("Compra");
+		lbTitulo.setForeground(new Color(225, 194, 19));
 		lbTitulo.setFont(new Font("Tahoma", Font.PLAIN, 40));
 		add(lbTitulo, "cell 1 1 3 1,alignx center,growy");
 		
@@ -60,6 +63,8 @@ public class TelaCompra extends JPanel {
 		panel_1.add(tabelaCarrinho, BorderLayout.CENTER);
 		
 		JLabel lbTotalCompra = new JLabel("Total: R$0000.00");
+		lbTotalCompra.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lbTotalCompra.setForeground(new Color(225, 194, 19));
 		add(lbTotalCompra, "cell 3 4,alignx right");
 		
 		JButton btAdicionar = new JButton("Adicionar");

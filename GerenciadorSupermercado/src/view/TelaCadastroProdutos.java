@@ -8,6 +8,7 @@ import javax.swing.JTextField;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JButton;
+import java.awt.Color;
 
 public class TelaCadastroProdutos extends JPanel {
 
@@ -22,13 +23,17 @@ public class TelaCadastroProdutos extends JPanel {
 	 * Create the panel.
 	 */
 	public TelaCadastroProdutos() {
+		setBackground(new Color(141, 141, 141));
 		setLayout(new MigLayout("", "[grow][grow][grow][grow][grow]", "[grow70][grow70][grow70][grow70][grow70][grow70][grow70][grow70][grow70][grow70][grow70][grow][grow70][grow70][grow70]"));
 		
 		JLabel lbTitulo = new JLabel("Cadastro de Produtos");
+		lbTitulo.setForeground(new Color(225, 194, 19));
+		lbTitulo.setBackground(new Color(225, 194, 19));
 		lbTitulo.setFont(new Font("Tahoma", Font.PLAIN, 40));
 		add(lbTitulo, "cell 1 1 3 1,alignx center,growy");
 		
 		JLabel lblNewLabel = new JLabel("Produto");
+		lblNewLabel.setForeground(new Color(225, 194, 19));
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		add(lblNewLabel, "cell 1 3,alignx right");
 		
@@ -38,6 +43,7 @@ public class TelaCadastroProdutos extends JPanel {
 		tfProduto.setColumns(10);
 		
 		JLabel lblNewLabel_1 = new JLabel("Preço em R$");
+		lblNewLabel_1.setForeground(new Color(225, 194, 19));
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		add(lblNewLabel_1, "cell 1 5,alignx right");
 		
@@ -47,6 +53,7 @@ public class TelaCadastroProdutos extends JPanel {
 		tfPreco.setColumns(10);
 		
 		JLabel lblNewLabel_2 = new JLabel("Descrição");
+		lblNewLabel_2.setForeground(new Color(225, 194, 19));
 		lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		add(lblNewLabel_2, "cell 1 7,alignx right");
 		
@@ -55,6 +62,7 @@ public class TelaCadastroProdutos extends JPanel {
 		tfDescricao.setColumns(10);
 		
 		JLabel lblNewLabel_3 = new JLabel("Qtde. Estoque");
+		lblNewLabel_3.setForeground(new Color(225, 194, 19));
 		lblNewLabel_3.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		add(lblNewLabel_3, "cell 1 9,alignx right");
 		
@@ -73,6 +81,7 @@ public class TelaCadastroProdutos extends JPanel {
 		add(tabelaCadastroProduto, "cell 1 11 3 1,grow");
 		
 		JButton btAdicionar = new JButton("Adicionar");
+		btAdicionar.setForeground(new Color(0, 0, 0));
 		add(btAdicionar, "cell 1 13,alignx center,growy");
 		
 		JButton btEditar = new JButton("Editar");

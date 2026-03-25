@@ -7,6 +7,7 @@ import javax.swing.JTextField;
 import javax.swing.JRadioButton;
 import java.awt.Font;
 import javax.swing.JButton;
+import java.awt.Color;
 
 public class TelaCadastroUsuarios extends JPanel {
 
@@ -18,13 +19,17 @@ public class TelaCadastroUsuarios extends JPanel {
 	 * Create the panel.
 	 */
 	public TelaCadastroUsuarios() {
+		setBackground(new Color(141, 141, 141));
 		setLayout(new MigLayout("", "[grow][grow][grow][grow][grow]", "[grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow]"));
 		
 		JLabel lbTitulo = new JLabel("Tela Cadastro");
+		lbTitulo.setForeground(new Color(225, 194, 19));
+		lbTitulo.setBackground(new Color(225, 194, 19));
 		lbTitulo.setFont(new Font("Tahoma", Font.PLAIN, 40));
 		add(lbTitulo, "cell 1 1 3 1,alignx center,growy");
 		
 		JLabel lbUsuario = new JLabel("Usuário");
+		lbUsuario.setForeground(new Color(225, 194, 19));
 		lbUsuario.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		add(lbUsuario, "cell 1 3,alignx center,growy");
 		
@@ -34,6 +39,7 @@ public class TelaCadastroUsuarios extends JPanel {
 		tfUsuário.setColumns(10);
 		
 		JLabel lbCPF = new JLabel("CPF");
+		lbCPF.setForeground(new Color(225, 194, 19));
 		lbCPF.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		add(lbCPF, "cell 1 5,alignx center,growy");
 		

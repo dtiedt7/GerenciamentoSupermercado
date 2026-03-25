@@ -8,6 +8,7 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.Color;
 
 public class TelaLogin extends JPanel {
 
@@ -19,13 +20,16 @@ public class TelaLogin extends JPanel {
 	 * Create the panel.
 	 */
 	public TelaLogin() {
+		setBackground(new Color(141, 141, 141));
 		setLayout(new MigLayout("", "[grow][grow][grow 20][grow 50][grow]", "[grow][grow][grow][grow][grow][grow][grow][grow][grow]"));
 		
 		JLabel lblNewLabel = new JLabel("Tela Login");
+		lblNewLabel.setForeground(new Color(225, 194, 19));
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 40));
 		add(lblNewLabel, "cell 1 1 3 1,alignx center,growy");
 		
 		JLabel lblNewLabel_1 = new JLabel("Usuário");
+		lblNewLabel_1.setForeground(new Color(225, 194, 19));
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		add(lblNewLabel_1, "cell 1 3,alignx center,growy");
 		
@@ -35,6 +39,7 @@ public class TelaLogin extends JPanel {
 		tfUsuario.setColumns(10);
 		
 		JLabel lblNewLabel_2 = new JLabel("CPF");
+		lblNewLabel_2.setForeground(new Color(225, 194, 19));
 		lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		add(lblNewLabel_2, "cell 1 5,alignx center,growy");
 		
