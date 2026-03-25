@@ -1,33 +1,55 @@
 package model;
 
 public class Usuario {
-	private String user;
+	private String nome;
 	private String CPF;
 	private String tipo;
-	public Usuario(String user, String CPF, String tipo) {
+	private String senha;
+	public Usuario(String nome, String CPF, String tipo, String senha) {
 		super();
-		this.user = user;
-		CPF = CPF;
+		this.nome = nome;
+		this.CPF = CPF;
 		this.tipo = tipo;
+		this.senha = senha;
 	}
-	public String getUser() {
-		return user;
+	
+	public Usuario() {
+	
 	}
+	
+	
+	public String getNome() {
+		return nome;
+	}
+	
 	public String getCPF() {
 		return CPF;
 	}
+	
 	public String getTipo() {
 		return tipo;
 	}
-	public void setUser(String user) {
-		this.user = user;
+	
+	public void setNome(String nome) {
+		this.nome = nome;
 	}
+	
 	public void setCPF(String CPF) {
 		CPF = CPF;
 	}
+	
 	public void setTipo(String tipo) {
 		this.tipo = tipo;
 	}
+
+	public String getSenha() {
+		return senha;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
+	}
+	
 	
 	
 }

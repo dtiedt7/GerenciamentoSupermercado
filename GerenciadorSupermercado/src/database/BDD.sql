@@ -13,6 +13,7 @@ CREATE TABLE Produtos (
 CREATE TABLE Usuarios (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(100) NOT NULL,
-    email VARCHAR(50) UNIQUE NOT NULL,
+    CPF CHAR(11) UNIQUE NOT NULL,
     senha VARCHAR(20) NOT NULL
+    tipo ENUM('admin', 'cliente') NOT NULL
 );
