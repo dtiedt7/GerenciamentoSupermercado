@@ -18,6 +18,9 @@ public class TelaCadastroProdutos extends JPanel {
 	private JTextField tfDescricao;
 	private JTextField tfEstoque;
 	private JTable tabelaCadastroProduto;
+	private JButton btAdicionar;
+	private JButton btEditar;
+	private JButton btRemover;
 
 	/**
 	 * Create the panel.
@@ -80,14 +83,14 @@ public class TelaCadastroProdutos extends JPanel {
 		));
 		add(tabelaCadastroProduto, "cell 1 11 3 1,grow");
 		
-		JButton btAdicionar = new JButton("Adicionar");
+		btAdicionar = new JButton("Adicionar");
 		btAdicionar.setForeground(new Color(0, 0, 0));
 		add(btAdicionar, "cell 1 13,alignx center,growy");
 		
-		JButton btEditar = new JButton("Editar");
+		btEditar = new JButton("Editar");
 		add(btEditar, "cell 2 13,alignx center,growy");
 		
-		JButton btRemover = new JButton("Remover");
+		btRemover = new JButton("Remover");
 		add(btRemover, "cell 3 13,alignx center,growy");
 
 	}

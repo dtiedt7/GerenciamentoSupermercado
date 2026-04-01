@@ -14,6 +14,8 @@ public class TelaCadastroUsuarios extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private JTextField tfUsuário;
 	private JTextField tfCPF;
+	private JButton btCadastrar, btVoltar;
+	private JRadioButton rbAdministrador, rbCliente;
 
 	/**
 	 * Create the panel.
@@ -48,19 +50,19 @@ public class TelaCadastroUsuarios extends JPanel {
 		add(tfCPF, "cell 3 5,growx");
 		tfCPF.setColumns(10);
 		
-		JRadioButton rbCliente = new JRadioButton("Cliente");
+		rbCliente = new JRadioButton("Cliente");
 		rbCliente.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		add(rbCliente, "cell 1 7,alignx center");
 		
-		JRadioButton rbAdministrador = new JRadioButton("Administrador");
+		rbAdministrador = new JRadioButton("Administrador");
 		rbAdministrador.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		add(rbAdministrador, "cell 3 7,alignx center");
 		
-		JButton btVoltar = new JButton("Tela de Login");
+		btVoltar = new JButton("Tela de Login");
 		btVoltar.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		add(btVoltar, "cell 1 9,alignx center");
 		
-		JButton btCadastrar = new JButton("Cadastrar Usuário");
+		btCadastrar = new JButton("Cadastrar Usuário");
 		btCadastrar.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		add(btCadastrar, "cell 3 9,growx");
 

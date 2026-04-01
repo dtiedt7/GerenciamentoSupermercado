@@ -23,7 +23,7 @@ public class UsuarioDAO {
             pstm.setString(1, usuario.getNome());
             pstm.setString(2, usuario.getCPF());
             pstm.setString(3, usuario.getSenha());
-            pstm.setString(4, usuario.getTipo());
+            pstm.setBoolean(4, usuario.getAdmin());
             
             pstm.executeUpdate();
         } catch (SQLException e) {
@@ -57,7 +57,7 @@ public class UsuarioDAO {
                 usuario.setNome(rset.getString("nome"));
                 usuario.setCPF(rset.getString("CPF"));
                 usuario.setSenha(rset.getString("senha"));
-                usuario.setTipo(rset.getString("tipo"));
+                usuario.setAdmin(rset.getBoolean("admin"));
                 usuarios.add(usuario);
             }
         } catch (SQLException e) {
@@ -81,7 +81,7 @@ public class UsuarioDAO {
             pstm.setString(1, usuario.getNome());
             pstm.setString(2, usuario.getCPF());
             pstm.setString(3, usuario.getSenha());
-            pstm.setString(4, usuario.getTipo());
+            pstm.setBoolean(4, usuario.getAdmin());
             pstm.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

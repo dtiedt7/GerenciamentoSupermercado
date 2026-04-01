@@ -15,6 +15,7 @@ public class TelaLogin extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private JTextField tfUsuario;
 	private JTextField tfCPF;
+	private JButton btLogin, btCadastrarUsuario;
 
 	/**
 	 * Create the panel.
@@ -48,11 +49,11 @@ public class TelaLogin extends JPanel {
 		add(tfCPF, "cell 3 5,growx");
 		tfCPF.setColumns(10);
 		
-		JButton btCadastrarUsuario = new JButton("Cadastrar");
+		btCadastrarUsuario = new JButton("Cadastrar");
 		btCadastrarUsuario.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		add(btCadastrarUsuario, "cell 1 7,alignx center");
 		
-		JButton btLogin = new JButton("Logar");
+		btLogin = new JButton("Logar");
 		btLogin.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		btLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

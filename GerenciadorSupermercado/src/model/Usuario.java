@@ -3,13 +3,13 @@ package model;
 public class Usuario {
 	private String nome;
 	private String CPF;
-	private String tipo;
+	private boolean admin;
 	private String senha;
-	public Usuario(String nome, String CPF, String tipo, String senha) {
+	public Usuario(String nome, String CPF, boolean admin, String senha) {
 		super();
 		this.nome = nome;
 		this.CPF = CPF;
-		this.tipo = tipo;
+		this.admin = admin;
 		this.senha = senha;
 	}
 	
@@ -26,8 +26,8 @@ public class Usuario {
 		return CPF;
 	}
 	
-	public String getTipo() {
-		return tipo;
+	public boolean getAdmin() {
+		return admin;
 	}
 	
 	public void setNome(String nome) {
@@ -38,8 +38,8 @@ public class Usuario {
 		CPF = CPF;
 	}
 	
-	public void setTipo(String tipo) {
-		this.tipo = tipo;
+	public void setAdmin(boolean admin) {
+		this.admin = admin;
 	}
 
 	public String getSenha() {

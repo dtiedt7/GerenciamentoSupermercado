@@ -15,5 +15,5 @@ CREATE TABLE Usuarios (
     nome VARCHAR(100) NOT NULL,
     CPF CHAR(11) UNIQUE NOT NULL,
     senha VARCHAR(20) NOT NULL
-    tipo ENUM('admin', 'cliente') NOT NULL
+    admin boolean NOT NULL
 );

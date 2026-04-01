@@ -15,6 +15,7 @@ public class TelaCompra extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private JTable tabelaProdutos;
 	private JTable tabelaCarrinho;
+	private JButton btRemover, btAdicionar, btFinalizarCompra;
 
 	/**
 	 * Create the panel.
@@ -67,13 +68,13 @@ public class TelaCompra extends JPanel {
 		lbTotalCompra.setForeground(new Color(225, 194, 19));
 		add(lbTotalCompra, "cell 3 4,alignx right");
 		
-		JButton btAdicionar = new JButton("Adicionar");
+		btAdicionar = new JButton("Adicionar");
 		add(btAdicionar, "cell 1 5,alignx center,growy");
 		
-		JButton btRemover = new JButton("Remover");
+		btRemover = new JButton("Remover");
 		add(btRemover, "cell 2 5,alignx center,growy");
 		
-		JButton btFinalizarCompra = new JButton("Finalizar Compra");
+		btFinalizarCompra = new JButton("Finalizar Compra");
 		add(btFinalizarCompra, "cell 3 5,alignx center,growy");
 
 	}
