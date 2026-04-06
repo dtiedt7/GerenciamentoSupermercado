@@ -9,6 +9,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JButton;
 import java.awt.Color;
+import javax.swing.JScrollPane;
 
 public class TelaCompra extends JPanel {
 
@@ -16,6 +17,8 @@ public class TelaCompra extends JPanel {
 	private JTable tabelaProdutos;
 	private JTable tabelaCarrinho;
 	private JButton btRemover, btAdicionar, btFinalizarCompra;
+	private JButton btDeslogar;
+	private JLabel lbTotalCompra;
 
 	/**
 	 * Create the panel.
@@ -41,10 +44,10 @@ public class TelaCompra extends JPanel {
 			new Object[][] {
 			},
 			new String[] {
-				"Produto", "Pre\u00E7o"
+				"ID", "Produto", "Pre\u00E7o", "Estoque"
 			}
 		));
-		panel.add(tabelaProdutos, BorderLayout.CENTER);
+		panel.add(new JScrollPane(tabelaProdutos), BorderLayout.CENTER);
 		
 		JPanel panel_1 = new JPanel();
 		add(panel_1, "cell 3 3,grow");
@@ -58,12 +61,12 @@ public class TelaCompra extends JPanel {
 			new Object[][] {
 			},
 			new String[] {
-				"Produto", "Quantidade"
+				"ID", "Produto", "Quantidade", "Subtotal"
 			}
 		));
-		panel_1.add(tabelaCarrinho, BorderLayout.CENTER);
+		panel_1.add(new JScrollPane(tabelaCarrinho), BorderLayout.CENTER);
 		
-		JLabel lbTotalCompra = new JLabel("Total: R$0000.00");
+		lbTotalCompra = new JLabel("Total: R$ 0.00");
 		lbTotalCompra.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		lbTotalCompra.setForeground(new Color(225, 194, 19));
 		add(lbTotalCompra, "cell 3 4,alignx right");
@@ -76,7 +79,38 @@ public class TelaCompra extends JPanel {
 		
 		btFinalizarCompra = new JButton("Finalizar Compra");
 		add(btFinalizarCompra, "cell 3 5,alignx center,growy");
+		
+		btDeslogar = new JButton("Deslogar");
+		add(btDeslogar, "cell 1 6,alignx left");
 
+	}
+	
+	public JTable getTabelaProdutos() {
+		return tabelaProdutos;
+	}
+	
+	public JTable getTabelaCarrinho() {
+		return tabelaCarrinho;
+	}
+	
+	public JButton getBtRemover() {
+		return btRemover;
+	}
+	
+	public JButton getBtAdicionar() {
+		return btAdicionar;
+	}
+	
+	public JButton getBtFinalizarCompra() {
+		return btFinalizarCompra;
+	}
+	
+	public JButton getBtDeslogar() {
+		return btDeslogar;
+	}
+	
+	public JLabel getLbTotalCompra() {
+		return lbTotalCompra;
 	}
 
 }

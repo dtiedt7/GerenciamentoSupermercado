@@ -2,21 +2,31 @@ package model;
 
 public class Produto {
 
+	private int id;
 	private String nome_produto;
 	private float preco;
 	private int qtde_estoque;
 	private String descricao;
 	
-	public Produto(String nome_produto, float preco, int qtde_estoque, String descricao) {
+	public Produto(int id, String nome_produto, float preco, int qtde_estoque, String descricao) {
 		super();
+		this.id = id;
 		this.nome_produto = nome_produto;
 		this.preco = preco;
 		this.qtde_estoque = qtde_estoque;
 		this.descricao = descricao;
 	}
 	
+	public Produto(String nome_produto, float preco, int qtde_estoque, String descricao) {
+		this(0, nome_produto, preco, qtde_estoque, descricao);
+	}
+	
 	public Produto() {
 
+	}
+	
+	public int getId() {
+		return id;
 	}
 	
 	public String getNome_produto() {
@@ -33,6 +43,10 @@ public class Produto {
 	
 	public String getDescricao() {
 		return descricao;
+	}
+	
+	public void setId(int id) {
+		this.id = id;
 	}
 	
 	public void setNome_produto(String nome_produto) {

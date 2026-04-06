@@ -9,6 +9,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JButton;
 import java.awt.Color;
+import javax.swing.JScrollPane;
 
 public class TelaCadastroProdutos extends JPanel {
 
@@ -21,6 +22,7 @@ public class TelaCadastroProdutos extends JPanel {
 	private JButton btAdicionar;
 	private JButton btEditar;
 	private JButton btRemover;
+	private JButton btDeslogar;
 
 	/**
 	 * Create the panel.
@@ -78,10 +80,11 @@ public class TelaCadastroProdutos extends JPanel {
 			new Object[][] {
 			},
 			new String[] {
-				"Produto", "Pre\u00E7o em R$", "Descri\u00E7\u00E3o", "Qtde. Estoque"
+				"ID", "Produto", "Pre\u00E7o em R$", "Descri\u00E7\u00E3o", "Qtde. Estoque"
 			}
 		));
-		add(tabelaCadastroProduto, "cell 1 11 3 1,grow");
+		JScrollPane scrollPane = new JScrollPane(tabelaCadastroProduto);
+		add(scrollPane, "cell 1 11 3 1,grow");
 		
 		btAdicionar = new JButton("Adicionar");
 		btAdicionar.setForeground(new Color(0, 0, 0));
@@ -92,7 +95,46 @@ public class TelaCadastroProdutos extends JPanel {
 		
 		btRemover = new JButton("Remover");
 		add(btRemover, "cell 3 13,alignx center,growy");
+		
+		btDeslogar = new JButton("Deslogar");
+		add(btDeslogar, "cell 1 14,alignx left");
 
+	}
+	
+	public JTextField getTfProduto() {
+		return tfProduto;
+	}
+	
+	public JTextField getTfPreco() {
+		return tfPreco;
+	}
+	
+	public JTextField getTfDescricao() {
+		return tfDescricao;
+	}
+	
+	public JTextField getTfEstoque() {
+		return tfEstoque;
+	}
+	
+	public JTable getTabelaCadastroProduto() {
+		return tabelaCadastroProduto;
+	}
+	
+	public JButton getBtAdicionar() {
+		return btAdicionar;
+	}
+	
+	public JButton getBtEditar() {
+		return btEditar;
+	}
+	
+	public JButton getBtRemover() {
+		return btRemover;
+	}
+	
+	public JButton getBtDeslogar() {
+		return btDeslogar;
 	}
 
 }

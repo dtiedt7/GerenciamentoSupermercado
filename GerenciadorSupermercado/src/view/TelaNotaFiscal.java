@@ -9,7 +9,8 @@ import java.awt.Color;
 public class TelaNotaFiscal extends JPanel {
 
 	private static final long serialVersionUID = 1L;
-	private JLabel lbNome, lbCPF_NF, lbProdutos, lbTotalCompra;
+	private JLabel lbNomeValor, lbCPF_NF, lbProdutos, lbTotalCompra;
+	private JLabel lbNomeRotulo;
 	/**
 	 * Create the panel.
 	 */
@@ -22,12 +23,17 @@ public class TelaNotaFiscal extends JPanel {
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 40));
 		add(lblNewLabel, "cell 1 1,alignx center");
 		
-		JLabel lbNome = new JLabel("Nome");
-		lbNome.setForeground(new Color(225, 194, 19));
-		lbNome.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		add(lbNome, "cell 1 3,alignx center");
+		lbNomeRotulo = new JLabel("Nome:");
+		lbNomeRotulo.setForeground(new Color(225, 194, 19));
+		lbNomeRotulo.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		add(lbNomeRotulo, "cell 1 3,alignx center");
 		
-		lbCPF_NF = new JLabel("CPF");
+		lbNomeValor = new JLabel("-");
+		lbNomeValor.setForeground(new Color(225, 194, 19));
+		lbNomeValor.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		add(lbNomeValor, "cell 1 4,alignx center");
+		
+		lbCPF_NF = new JLabel("CPF: -");
 		lbCPF_NF.setForeground(new Color(225, 194, 19));
 		lbCPF_NF.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		add(lbCPF_NF, "cell 1 5,alignx center");
@@ -38,11 +44,27 @@ public class TelaNotaFiscal extends JPanel {
 		lbProdutos.setForeground(new Color(225, 194, 19));
 		add(lbProdutos, "cell 1 7,alignx center");
 		
-		lbTotalCompra = new JLabel("Total Compra");
+		lbTotalCompra = new JLabel("Total: R$ 0.00");
 		lbTotalCompra.setForeground(new Color(225, 194, 19));
 		lbTotalCompra.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		add(lbTotalCompra, "cell 1 9,alignx center");
 
+	}
+	
+	public void setNome(String nome) {
+		lbNomeValor.setText(nome == null ? "-" : nome);
+	}
+	
+	public void setCpf(String cpf) {
+		lbCPF_NF.setText("CPF: " + (cpf == null ? "-" : cpf));
+	}
+	
+	public void setProdutosTexto(String texto) {
+		lbProdutos.setText(texto == null ? "Produtos" : texto);
+	}
+	
+	public void setTotal(float total) {
+		lbTotalCompra.setText(String.format("Total: R$ %.2f", total));
 	}
 
 }

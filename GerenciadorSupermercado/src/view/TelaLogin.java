@@ -62,5 +62,21 @@ public class TelaLogin extends JPanel {
 		add(btLogin, "cell 3 7,growx");
 		
 	}
+	
+	public JTextField getTfUsuario() {
+		return tfUsuario;
+	}
+	
+	public JTextField getTfCPF() {
+		return tfCPF;
+	}
+	
+	public JButton getBtLogin() {
+		return btLogin;
+	}
+	
+	public JButton getBtCadastrarUsuario() {
+		return btCadastrarUsuario;
+	}
 
 }

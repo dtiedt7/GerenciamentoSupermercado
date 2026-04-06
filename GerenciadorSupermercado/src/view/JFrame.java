@@ -17,8 +17,7 @@ public class JFrame extends javax.swing.JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					JFrame frame = new JFrame();
-					frame.setVisible(true);
+					main.Main.main(args);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -31,7 +30,7 @@ public class JFrame extends javax.swing.JFrame {
 	 */
 	public JFrame() {
 		setTitle("Gerenciador de Supermercado");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));

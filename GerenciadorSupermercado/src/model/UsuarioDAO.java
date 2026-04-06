@@ -42,7 +42,7 @@ public class UsuarioDAO {
 
     // READ - Listar todos os usuários
     public List<Usuario> listarUsuarios() {
-        String sql = "SELECT * FROM usuarios";
+        String sql = "SELECT id, nome, CPF, senha, tipo FROM Usuarios ORDER BY nome";
         List<Usuario> usuarios = new ArrayList<>();
         Connection conexao = null;
         PreparedStatement pstm = null;
@@ -54,19 +54,59 @@ public class UsuarioDAO {
 
             while (rset.next()) {
                 Usuario usuario = new Usuario();
+                usuario.setId(rset.getInt("id"));
                 usuario.setNome(rset.getString("nome"));
                 usuario.setCPF(rset.getString("CPF"));
                 usuario.setSenha(rset.getString("senha"));
-                usuario.setAdmin(rset.getBoolean("admin"));
+                usuario.setAdmin(rset.getBoolean("tipo"));
                 usuarios.add(usuario);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
         	BancoDeDados.desconectar(conexao);
-            // Fechar recursos
+            if (rset != null) {
+            	try { rset.close(); } catch (SQLException e) { e.printStackTrace(); }
+            }
+            if (pstm != null) {
+            	try { pstm.close(); } catch (SQLException e) { e.printStackTrace(); }
+            }
         }
         return usuarios;
+    }
+    
+    public Usuario buscarPorNomeECpf(String nome, String cpf) {
+    	String sql = "SELECT id, nome, CPF, senha, tipo FROM Usuarios WHERE nome = ? AND CPF = ? LIMIT 1";
+    	Connection conexao = null;
+    	PreparedStatement pstm = null;
+    	ResultSet rset = null;
+    	try {
+    		conexao = BancoDeDados.conectar();
+    		pstm = conexao.prepareStatement(sql);
+    		pstm.setString(1, nome);
+    		pstm.setString(2, cpf);
+    		rset = pstm.executeQuery();
+    		if (rset.next()) {
+    			Usuario usuario = new Usuario();
+    			usuario.setId(rset.getInt("id"));
+    			usuario.setNome(rset.getString("nome"));
+    			usuario.setCPF(rset.getString("CPF"));
+    			usuario.setSenha(rset.getString("senha"));
+    			usuario.setAdmin(rset.getBoolean("tipo"));
+    			return usuario;
+    		}
+    	} catch (SQLException e) {
+    		e.printStackTrace();
+    	} finally {
+    		BancoDeDados.desconectar(conexao);
+            if (rset != null) {
+            	try { rset.close(); } catch (SQLException e) { e.printStackTrace(); }
+            }
+            if (pstm != null) {
+            	try { pstm.close(); } catch (SQLException e) { e.printStackTrace(); }
+            }
+    	}
+    	return null;
     }
 
     // UPDATE - Atualizar um usuário existente
@@ -82,11 +122,15 @@ public class UsuarioDAO {
             pstm.setString(2, usuario.getCPF());
             pstm.setString(3, usuario.getSenha());
             pstm.setBoolean(4, usuario.getAdmin());
+            pstm.setInt(5, usuario.getId());
             pstm.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
         	BancoDeDados.desconectar(conexao);
+            if (pstm != null) {
+            	try { pstm.close(); } catch (SQLException e) { e.printStackTrace(); }
+            }
         }
     }
 
@@ -105,6 +149,9 @@ public class UsuarioDAO {
             e.printStackTrace();
         } finally {
         	BancoDeDados.desconectar(conexao);
+            if (pstm != null) {
+            	try { pstm.close(); } catch (SQLException e) { e.printStackTrace(); }
+            }
         }
     }
 }

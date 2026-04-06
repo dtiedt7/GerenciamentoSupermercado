@@ -8,14 +8,18 @@ import javax.swing.JRadioButton;
 import java.awt.Font;
 import javax.swing.JButton;
 import java.awt.Color;
+import javax.swing.ButtonGroup;
+import javax.swing.JPasswordField;
 
 public class TelaCadastroUsuarios extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 	private JTextField tfUsuário;
 	private JTextField tfCPF;
+	private JPasswordField pfSenha;
 	private JButton btCadastrar, btVoltar;
 	private JRadioButton rbAdministrador, rbCliente;
+	private final ButtonGroup grupoTipo = new ButtonGroup();
 
 	/**
 	 * Create the panel.
@@ -50,12 +54,23 @@ public class TelaCadastroUsuarios extends JPanel {
 		add(tfCPF, "cell 3 5,growx");
 		tfCPF.setColumns(10);
 		
+		JLabel lbSenha = new JLabel("Senha");
+		lbSenha.setForeground(new Color(225, 194, 19));
+		lbSenha.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		add(lbSenha, "cell 1 6,alignx center,growy");
+		
+		pfSenha = new JPasswordField();
+		pfSenha.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		add(pfSenha, "cell 3 6,growx");
+		
 		rbCliente = new JRadioButton("Cliente");
 		rbCliente.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		grupoTipo.add(rbCliente);
 		add(rbCliente, "cell 1 7,alignx center");
 		
 		rbAdministrador = new JRadioButton("Administrador");
 		rbAdministrador.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		grupoTipo.add(rbAdministrador);
 		add(rbAdministrador, "cell 3 7,alignx center");
 		
 		btVoltar = new JButton("Tela de Login");
@@ -66,6 +81,34 @@ public class TelaCadastroUsuarios extends JPanel {
 		btCadastrar.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		add(btCadastrar, "cell 3 9,growx");
 
+	}
+	
+	public JTextField getTfUsuário() {
+		return tfUsuário;
+	}
+	
+	public JTextField getTfCPF() {
+		return tfCPF;
+	}
+	
+	public JPasswordField getPfSenha() {
+		return pfSenha;
+	}
+	
+	public JButton getBtCadastrar() {
+		return btCadastrar;
+	}
+	
+	public JButton getBtVoltar() {
+		return btVoltar;
+	}
+	
+	public JRadioButton getRbAdministrador() {
+		return rbAdministrador;
+	}
+	
+	public JRadioButton getRbCliente() {
+		return rbCliente;
 	}
 
 }
