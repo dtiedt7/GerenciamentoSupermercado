@@ -8,20 +8,22 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 import model.Produto;
-import model.Supermercado;
+import model.ProdutoDAO;
 import model.Usuario;
 import view.TelaCadastroProdutos;
 
 public class ProdutosController implements ActionListener {
 	private static Usuario usuarioLogado;
+	private static ProdutoDAO produtoDAOCompartilhado;
 
 	private final TelaCadastroProdutos tela;
-	private final Supermercado supermercado;
+	private final ProdutoDAO produtoDAO;
 	private final Navegador navegador;
 
-	public ProdutosController(TelaCadastroProdutos tela, Supermercado supermercado, Navegador navegador) {
+	public ProdutosController(TelaCadastroProdutos tela, ProdutoDAO produtoDAO, Navegador navegador) {
 		this.tela = tela;
-		this.supermercado = supermercado;
+		this.produtoDAO = produtoDAO;
+		produtoDAOCompartilhado = produtoDAO;
 		this.navegador = navegador;
 	}
 
@@ -29,8 +31,11 @@ public class ProdutosController implements ActionListener {
 		usuarioLogado = usuario;
 	}
 
-	public static void carregarTabela(TelaCadastroProdutos tela, Supermercado supermercado) {
-		List<Produto> produtos = supermercado.listarProdutos();
+	public static void carregarTabela(TelaCadastroProdutos tela) {
+		if (produtoDAOCompartilhado == null) {
+			return;
+		}
+		List<Produto> produtos = produtoDAOCompartilhado.listarProdutos();
 		DefaultTableModel model = (DefaultTableModel) tela.getTabelaCadastroProduto().getModel();
 		model.setRowCount(0);
 		for (Produto p : produtos) {
@@ -85,9 +90,9 @@ public class ProdutosController implements ActionListener {
 				JOptionPane.showMessageDialog(null, "Informe o nome do produto.", "Erro", JOptionPane.ERROR_MESSAGE);
 				return;
 			}
-			supermercado.cadastrarProduto(new Produto(nome.trim(), preco, estoque, desc == null ? "" : desc.trim()));
+			produtoDAO.adicionarProduto(new Produto(nome.trim(), preco, estoque, desc == null ? "" : desc.trim()));
 			JOptionPane.showMessageDialog(null, "Produto cadastrado com sucesso.");
-			carregarTabela(tela, supermercado);
+			carregarTabela(tela);
 		} catch (NumberFormatException ex) {
 			JOptionPane.showMessageDialog(null, "Preço/Estoque inválidos.", "Erro", JOptionPane.ERROR_MESSAGE);
 		}
@@ -105,9 +110,9 @@ public class ProdutosController implements ActionListener {
 			int estoque = Integer.parseInt(tela.getTfEstoque().getText());
 			String desc = tela.getTfDescricao().getText();
 
-			supermercado.atualizarProduto(new Produto(id, nome.trim(), preco, estoque, desc == null ? "" : desc.trim()));
+			produtoDAO.atualizarProduto(new Produto(id, nome.trim(), preco, estoque, desc == null ? "" : desc.trim()));
 			JOptionPane.showMessageDialog(null, "Produto atualizado com sucesso.");
-			carregarTabela(tela, supermercado);
+			carregarTabela(tela);
 		} catch (NumberFormatException ex) {
 			JOptionPane.showMessageDialog(null, "Preço/Estoque inválidos.", "Erro", JOptionPane.ERROR_MESSAGE);
 		}
@@ -119,9 +124,9 @@ public class ProdutosController implements ActionListener {
 			JOptionPane.showMessageDialog(null, "Selecione um produto na tabela.", "Erro", JOptionPane.ERROR_MESSAGE);
 			return;
 		}
-		supermercado.removerProduto(id);
+		produtoDAO.excluirProduto(id);
 		JOptionPane.showMessageDialog(null, "Produto removido com sucesso.");
-		carregarTabela(tela, supermercado);
+		carregarTabela(tela);
 	}
 }
 

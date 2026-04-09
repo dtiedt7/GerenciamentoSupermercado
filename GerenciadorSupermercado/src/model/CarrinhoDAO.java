@@ -1,16 +1,47 @@
 package model;
 
-public class CarrinhoDAO {
-	// CREATE - Criar um novo carrinho
-	public Carrinho criarCarrinho() {
-		return new Carrinho();
-	}
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
-	// DELETE - Limpar carrinho (remove todos os itens)
-	public void limparCarrinho(Carrinho carrinho) {
-		if (carrinho != null) {
-			carrinho.limpar();
-		}
-	}
+import database.BancoDeDados;
+
+public class CarrinhoDAO {
+    public Carrinho criarCarrinho() {
+        return new Carrinho();
+    }
+
+    public void registrarItemCompra(int usuarioId, int produtoId, int quantidade, float precoUnitario) {
+        String sql = "INSERT INTO Carrinho (usuario_id, produto_id, quantidade, preco_unitario) VALUES (?, ?, ?, ?)";
+        Connection conexao = null;
+        PreparedStatement pstm = null;
+
+        try {
+            conexao = BancoDeDados.conectar();
+            pstm = conexao.prepareStatement(sql);
+            pstm.setInt(1, usuarioId);
+            pstm.setInt(2, produtoId);
+            pstm.setInt(3, quantidade);
+            pstm.setFloat(4, precoUnitario);
+            pstm.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            BancoDeDados.desconectar(conexao);
+            if (pstm != null) {
+                try {
+                    pstm.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    public void limparCarrinho(Carrinho carrinho) {
+        if (carrinho != null) {
+            carrinho.limpar();
+        }
+    }
 }
 

@@ -5,18 +5,18 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JOptionPane;
 
-import model.Supermercado;
 import model.Usuario;
+import model.UsuarioDAO;
 import view.TelaCadastroUsuarios;
 
 public class CadastroUsuarioController implements ActionListener {
 	private final TelaCadastroUsuarios tela;
-	private final Supermercado supermercado;
+	private final UsuarioDAO usuarioDAO;
 	private final Navegador navegador;
 
-	public CadastroUsuarioController(TelaCadastroUsuarios tela, Supermercado supermercado, Navegador navegador) {
+	public CadastroUsuarioController(TelaCadastroUsuarios tela, UsuarioDAO usuarioDAO, Navegador navegador) {
 		this.tela = tela;
-		this.supermercado = supermercado;
+		this.usuarioDAO = usuarioDAO;
 		this.navegador = navegador;
 	}
 
@@ -47,7 +47,7 @@ public class CadastroUsuarioController implements ActionListener {
 				return;
 			}
 
-			supermercado.cadastrarUsuario(new Usuario(nome.trim(), cpf.trim(), admin, senha));
+			usuarioDAO.adicionarUsuario(new Usuario(nome.trim(), cpf.trim(), admin, senha));
 			JOptionPane.showMessageDialog(null, "Usuário cadastrado com sucesso.");
 			navegador.navegarPara(LoginController.TELA_LOGIN);
 		}

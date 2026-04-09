@@ -12,19 +12,26 @@ public class BancoDeDados {
     private static final String DRIVER = "com.mysql.cj.jdbc.Driver";
 
     public static Connection conectar() {
-        Connection conexao = null;
         try {
             Class.forName(DRIVER);
+
             String url = System.getProperty("DB_URL", DEFAULT_URL);
             String usuario = System.getProperty("DB_USER", DEFAULT_USUARIO);
             String senha = System.getProperty("DB_PASS", DEFAULT_SENHA);
-            conexao = DriverManager.getConnection(url, usuario, senha);
+
+            return DriverManager.getConnection(url, usuario, senha);
+
         } catch (ClassNotFoundException e) {
-            System.err.println("Driver JDBC não encontrado: " + e.getMessage());
+            throw new RuntimeException(
+                "Driver JDBC MySQL não encontrado. Adicione o mysql-connector-j ao Build Path do projeto.",
+                e
+            );
         } catch (SQLException e) {
-            System.err.println("Erro ao conectar ao banco de dados: " + e.getMessage());
+            throw new RuntimeException(
+                "Erro ao conectar ao banco de dados: " + e.getMessage(),
+                e
+            );
         }
-        return conexao;
     }
 
     public static void desconectar(Connection conexao) {
@@ -32,7 +39,7 @@ public class BancoDeDados {
             try {
                 conexao.close();
             } catch (SQLException e) {
-                System.err.println("Erro ao fechar a conexão: " + e.getMessage());
+                throw new RuntimeException("Erro ao fechar a conexão: " + e.getMessage(), e);
             }
         }
     }

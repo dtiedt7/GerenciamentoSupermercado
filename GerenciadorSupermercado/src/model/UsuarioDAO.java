@@ -8,28 +8,33 @@ import java.util.ArrayList;
 import java.util.List;
 
 import database.BancoDeDados;
-import model.Usuario;
 
 public class UsuarioDAO {
-	// CREATE - Adicionar um novo usuário
+
     public void adicionarUsuario(Usuario usuario) {
-        String sql = "INSERT INTO Usuarios (nome, CPF, senha, tipo) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO Usuarios (nome, CPF, senha, admin) VALUES (?, ?, ?, ?)";
+
         Connection conexao = null;
         PreparedStatement pstm = null;
 
         try {
-            conexao = database.BancoDeDados.conectar();
+            conexao = BancoDeDados.conectar();
+
+            if (conexao == null) {
+                throw new RuntimeException("A conexão com o banco retornou nula.");
+            }
+
             pstm = conexao.prepareStatement(sql);
             pstm.setString(1, usuario.getNome());
             pstm.setString(2, usuario.getCPF());
             pstm.setString(3, usuario.getSenha());
             pstm.setBoolean(4, usuario.getAdmin());
-            
+
             pstm.executeUpdate();
+
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException("Erro ao adicionar usuário: " + e.getMessage(), e);
         } finally {
-        	BancoDeDados.desconectar(conexao);
             if (pstm != null) {
                 try {
                     pstm.close();
@@ -37,18 +42,25 @@ public class UsuarioDAO {
                     e.printStackTrace();
                 }
             }
+            BancoDeDados.desconectar(conexao);
         }
     }
 
-    // READ - Listar todos os usuários
     public List<Usuario> listarUsuarios() {
-        String sql = "SELECT id, nome, CPF, senha, tipo FROM Usuarios ORDER BY nome";
+        String sql = "SELECT id, nome, CPF, senha, admin FROM Usuarios ORDER BY nome";
         List<Usuario> usuarios = new ArrayList<>();
+
         Connection conexao = null;
         PreparedStatement pstm = null;
         ResultSet rset = null;
+
         try {
             conexao = BancoDeDados.conectar();
+
+            if (conexao == null) {
+                throw new RuntimeException("A conexão com o banco retornou nula.");
+            }
+
             pstm = conexao.prepareStatement(sql);
             rset = pstm.executeQuery();
 
@@ -58,101 +70,151 @@ public class UsuarioDAO {
                 usuario.setNome(rset.getString("nome"));
                 usuario.setCPF(rset.getString("CPF"));
                 usuario.setSenha(rset.getString("senha"));
-                usuario.setAdmin(rset.getBoolean("tipo"));
+                usuario.setAdmin(rset.getBoolean("admin"));
                 usuarios.add(usuario);
             }
+
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException("Erro ao listar usuários: " + e.getMessage(), e);
         } finally {
-        	BancoDeDados.desconectar(conexao);
             if (rset != null) {
-            	try { rset.close(); } catch (SQLException e) { e.printStackTrace(); }
+                try {
+                    rset.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
             }
             if (pstm != null) {
-            	try { pstm.close(); } catch (SQLException e) { e.printStackTrace(); }
+                try {
+                    pstm.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
             }
+            BancoDeDados.desconectar(conexao);
         }
+
         return usuarios;
     }
-    
+
     public Usuario buscarPorNomeECpf(String nome, String cpf) {
-    	String sql = "SELECT id, nome, CPF, senha, tipo FROM Usuarios WHERE nome = ? AND CPF = ? LIMIT 1";
-    	Connection conexao = null;
-    	PreparedStatement pstm = null;
-    	ResultSet rset = null;
-    	try {
-    		conexao = BancoDeDados.conectar();
-    		pstm = conexao.prepareStatement(sql);
-    		pstm.setString(1, nome);
-    		pstm.setString(2, cpf);
-    		rset = pstm.executeQuery();
-    		if (rset.next()) {
-    			Usuario usuario = new Usuario();
-    			usuario.setId(rset.getInt("id"));
-    			usuario.setNome(rset.getString("nome"));
-    			usuario.setCPF(rset.getString("CPF"));
-    			usuario.setSenha(rset.getString("senha"));
-    			usuario.setAdmin(rset.getBoolean("tipo"));
-    			return usuario;
-    		}
-    	} catch (SQLException e) {
-    		e.printStackTrace();
-    	} finally {
-    		BancoDeDados.desconectar(conexao);
+        String sql = "SELECT id, nome, CPF, senha, admin FROM Usuarios WHERE nome = ? AND CPF = ? LIMIT 1";
+
+        Connection conexao = null;
+        PreparedStatement pstm = null;
+        ResultSet rset = null;
+
+        try {
+            conexao = BancoDeDados.conectar();
+
+            if (conexao == null) {
+                throw new RuntimeException("A conexão com o banco retornou nula.");
+            }
+
+            pstm = conexao.prepareStatement(sql);
+            pstm.setString(1, nome);
+            pstm.setString(2, cpf);
+
+            rset = pstm.executeQuery();
+
+            if (rset.next()) {
+                Usuario usuario = new Usuario();
+                usuario.setId(rset.getInt("id"));
+                usuario.setNome(rset.getString("nome"));
+                usuario.setCPF(rset.getString("CPF"));
+                usuario.setSenha(rset.getString("senha"));
+                usuario.setAdmin(rset.getBoolean("admin"));
+                return usuario;
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao buscar usuário: " + e.getMessage(), e);
+        } finally {
             if (rset != null) {
-            	try { rset.close(); } catch (SQLException e) { e.printStackTrace(); }
+                try {
+                    rset.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
             }
             if (pstm != null) {
-            	try { pstm.close(); } catch (SQLException e) { e.printStackTrace(); }
+                try {
+                    pstm.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
             }
-    	}
-    	return null;
+            BancoDeDados.desconectar(conexao);
+        }
+
+        return null;
     }
 
-    // UPDATE - Atualizar um usuário existente
     public void atualizarUsuario(Usuario usuario) {
-        String sql = "UPDATE Usuarios SET nome = ?, CPF = ?, senha = ?, tipo = ? WHERE id = ?";
+        String sql = "UPDATE Usuarios SET nome = ?, CPF = ?, senha = ?, admin = ? WHERE id = ?";
+
         Connection conexao = null;
         PreparedStatement pstm = null;
 
         try {
             conexao = BancoDeDados.conectar();
+
+            if (conexao == null) {
+                throw new RuntimeException("A conexão com o banco retornou nula.");
+            }
+
             pstm = conexao.prepareStatement(sql);
             pstm.setString(1, usuario.getNome());
             pstm.setString(2, usuario.getCPF());
             pstm.setString(3, usuario.getSenha());
             pstm.setBoolean(4, usuario.getAdmin());
             pstm.setInt(5, usuario.getId());
+
             pstm.executeUpdate();
+
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException("Erro ao atualizar usuário: " + e.getMessage(), e);
         } finally {
-        	BancoDeDados.desconectar(conexao);
             if (pstm != null) {
-            	try { pstm.close(); } catch (SQLException e) { e.printStackTrace(); }
+                try {
+                    pstm.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
             }
+            BancoDeDados.desconectar(conexao);
         }
     }
 
-    // DELETE - Excluir um usuário pelo ID
     public void excluirUsuario(int id) {
         String sql = "DELETE FROM Usuarios WHERE id = ?";
+
         Connection conexao = null;
         PreparedStatement pstm = null;
 
         try {
             conexao = BancoDeDados.conectar();
+
+            if (conexao == null) {
+                throw new RuntimeException("A conexão com o banco retornou nula.");
+            }
+
             pstm = conexao.prepareStatement(sql);
             pstm.setInt(1, id);
+
             pstm.executeUpdate();
+
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException("Erro ao excluir usuário: " + e.getMessage(), e);
         } finally {
-        	BancoDeDados.desconectar(conexao);
             if (pstm != null) {
-            	try { pstm.close(); } catch (SQLException e) { e.printStackTrace(); }
+                try {
+                    pstm.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
             }
+            BancoDeDados.desconectar(conexao);
         }
     }
 }
-

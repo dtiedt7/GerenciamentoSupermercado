@@ -28,7 +28,7 @@ public class ProdutoDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-        	BancoDeDados.desconectar(conexao);
+        	database.BancoDeDados.desconectar(conexao);
             if (pstm != null) {
                 try {
                     pstm.close();

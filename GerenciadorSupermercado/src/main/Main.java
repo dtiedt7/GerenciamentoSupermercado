@@ -10,13 +10,14 @@ import controller.LoginController;
 import controller.Navegador;
 import controller.ProdutosController;
 import controller.CompraController;
-import model.Supermercado;
+import model.CarrinhoDAO;
+import model.ProdutoDAO;
+import model.UsuarioDAO;
 import view.Janela;
 import view.TelaCadastroProdutos;
 import view.TelaCadastroUsuarios;
 import view.TelaCompra;
 import view.TelaLogin;
-import view.TelaNotaFiscal;
 
 public class Main {
 	public static void main(String[] args) {
@@ -25,29 +26,30 @@ public class Main {
 
 		Janela janela = new Janela();
 		Navegador navegador = new Navegador(janela);
-		Supermercado supermercado = new Supermercado();
+		UsuarioDAO usuarioDAO = new UsuarioDAO();
+		ProdutoDAO produtoDAO = new ProdutoDAO();
+		CarrinhoDAO carrinhoDAO = new CarrinhoDAO();
 
 		TelaLogin telaLogin = new TelaLogin();
 		TelaCadastroUsuarios telaCadastroUsuarios = new TelaCadastroUsuarios();
 		TelaCadastroProdutos telaCadastroProdutos = new TelaCadastroProdutos();
 		TelaCompra telaCompra = new TelaCompra();
-		TelaNotaFiscal telaNotaFiscal = new TelaNotaFiscal();
 
-		LoginController loginController = new LoginController(telaLogin, supermercado, navegador, telaCadastroProdutos, telaCompra);
+		LoginController loginController = new LoginController(telaLogin, usuarioDAO, navegador, telaCadastroProdutos, telaCompra);
 		telaLogin.getBtLogin().addActionListener(loginController);
 		telaLogin.getBtCadastrarUsuario().addActionListener(loginController);
 
-		CadastroUsuarioController cadastroUsuarioController = new CadastroUsuarioController(telaCadastroUsuarios, supermercado, navegador);
+		CadastroUsuarioController cadastroUsuarioController = new CadastroUsuarioController(telaCadastroUsuarios, usuarioDAO, navegador);
 		telaCadastroUsuarios.getBtCadastrar().addActionListener(cadastroUsuarioController);
 		telaCadastroUsuarios.getBtVoltar().addActionListener(cadastroUsuarioController);
 
-		ProdutosController produtosController = new ProdutosController(telaCadastroProdutos, supermercado, navegador);
+		ProdutosController produtosController = new ProdutosController(telaCadastroProdutos, produtoDAO, navegador);
 		telaCadastroProdutos.getBtAdicionar().addActionListener(produtosController);
 		telaCadastroProdutos.getBtEditar().addActionListener(produtosController);
 		telaCadastroProdutos.getBtRemover().addActionListener(produtosController);
 		telaCadastroProdutos.getBtDeslogar().addActionListener(produtosController);
 
-		CompraController compraController = new CompraController(telaCompra, telaNotaFiscal, supermercado, navegador);
+		CompraController compraController = new CompraController(telaCompra, produtoDAO, carrinhoDAO, navegador);
 		telaCompra.getBtAdicionar().addActionListener(compraController);
 		telaCompra.getBtRemover().addActionListener(compraController);
 		telaCompra.getBtFinalizarCompra().addActionListener(compraController);
@@ -57,7 +59,6 @@ public class Main {
 		navegador.adicionarPainel(LoginController.TELA_CADASTRO_USUARIO, telaCadastroUsuarios);
 		navegador.adicionarPainel(LoginController.TELA_CADASTRO_PRODUTOS, telaCadastroProdutos);
 		navegador.adicionarPainel(LoginController.TELA_COMPRA, telaCompra);
-		navegador.adicionarPainel(LoginController.TELA_NOTA_FISCAL, telaNotaFiscal);
 
 		janela.setLocationRelativeTo(null);
 		janela.setVisible(true);

@@ -8,27 +8,29 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 import model.Carrinho;
-import model.ItemCarrinho;
-import model.NotaFiscal;
 import model.Produto;
-import model.Supermercado;
+import model.CarrinhoDAO;
+import model.ProdutoDAO;
 import model.Usuario;
 import view.TelaCompra;
-import view.TelaNotaFiscal;
 
 public class CompraController implements ActionListener {
 	private static Usuario usuarioLogado;
-	private static final Carrinho carrinho = new Carrinho();
+	private static Carrinho carrinho = new Carrinho();
+	private static ProdutoDAO produtoDAOCompartilhado;
+	private static CarrinhoDAO carrinhoDAOCompartilhado;
 
 	private final TelaCompra tela;
-	private final TelaNotaFiscal telaNotaFiscal;
-	private final Supermercado supermercado;
+	private final ProdutoDAO produtoDAO;
+	private final CarrinhoDAO carrinhoDAO;
 	private final Navegador navegador;
 
-	public CompraController(TelaCompra tela, TelaNotaFiscal telaNotaFiscal, Supermercado supermercado, Navegador navegador) {
+	public CompraController(TelaCompra tela, ProdutoDAO produtoDAO, CarrinhoDAO carrinhoDAO, Navegador navegador) {
 		this.tela = tela;
-		this.telaNotaFiscal = telaNotaFiscal;
-		this.supermercado = supermercado;
+		this.produtoDAO = produtoDAO;
+		this.carrinhoDAO = carrinhoDAO;
+		produtoDAOCompartilhado = produtoDAO;
+		carrinhoDAOCompartilhado = carrinhoDAO;
 		this.navegador = navegador;
 	}
 
@@ -37,8 +39,11 @@ public class CompraController implements ActionListener {
 		carrinho.limpar();
 	}
 
-	public static void recarregarProdutos(TelaCompra tela, Supermercado supermercado) {
-		List<Produto> produtos = supermercado.listarProdutos();
+	public static void recarregarProdutos(TelaCompra tela) {
+		if (produtoDAOCompartilhado == null) {
+			return;
+		}
+		List<Produto> produtos = produtoDAOCompartilhado.listarProdutos();
 		DefaultTableModel model = (DefaultTableModel) tela.getTabelaProdutos().getModel();
 		model.setRowCount(0);
 		for (Produto p : produtos) {
@@ -49,7 +54,7 @@ public class CompraController implements ActionListener {
 	public static void atualizarCarrinho(TelaCompra tela) {
 		DefaultTableModel model = (DefaultTableModel) tela.getTabelaCarrinho().getModel();
 		model.setRowCount(0);
-		for (ItemCarrinho item : carrinho.getItens()) {
+		for (Carrinho.Item item : carrinho.getItens()) {
 			model.addRow(new Object[] { item.getProduto().getId(), item.getProduto().getNome_produto(), item.getQuantidade(),
 					item.getSubtotal() });
 		}
@@ -110,7 +115,7 @@ public class CompraController implements ActionListener {
 			return;
 		}
 		Produto produto = null;
-		for (Produto p : supermercado.listarProdutos()) {
+		for (Produto p : produtoDAO.listarProdutos()) {
 			if (p.getId() == id) {
 				produto = p;
 				break;
@@ -130,9 +135,7 @@ public class CompraController implements ActionListener {
 			JOptionPane.showMessageDialog(null, "Selecione um item do carrinho para remover.", "Erro", JOptionPane.ERROR_MESSAGE);
 			return;
 		}
-		Produto prod = new Produto();
-		prod.setId(id);
-		carrinho.remover(prod, 1);
+		carrinho.removerPorId(id, 1);
 		atualizarCarrinho(tela);
 	}
 
@@ -141,32 +144,40 @@ public class CompraController implements ActionListener {
 			JOptionPane.showMessageDialog(null, "Carrinho vazio.", "Erro", JOptionPane.ERROR_MESSAGE);
 			return;
 		}
-		NotaFiscal nf = supermercado.comprar(usuarioLogado, carrinho);
-		if (nf == null) {
-			JOptionPane.showMessageDialog(null, "Não foi possível finalizar a compra (estoque/BD).", "Erro",
-					JOptionPane.ERROR_MESSAGE);
-			return;
+		float total = 0f;
+		StringBuilder sb = new StringBuilder("NOTA FISCAL\n");
+		sb.append("Cliente: ").append(usuarioLogado.getNome()).append("\n");
+		sb.append("CPF: ").append(usuarioLogado.getCPF()).append("\n");
+		sb.append("--------------------\n");
+
+		for (Carrinho.Item item : carrinho.getItens()) {
+			Produto produtoNoBanco = produtoDAO.buscarPorId(item.getProduto().getId());
+			if (produtoNoBanco == null || produtoNoBanco.getQtde_estoque() < item.getQuantidade()) {
+				JOptionPane.showMessageDialog(null, "Estoque insuficiente para " + item.getProduto().getNome_produto(), "Erro",
+						JOptionPane.ERROR_MESSAGE);
+				return;
+			}
 		}
 
-		StringBuilder sb = new StringBuilder("<html>Produtos:<br/>");
-		for (ItemCarrinho item : nf.getItens()) {
+		for (Carrinho.Item item : carrinho.getItens()) {
+			Produto produtoNoBanco = produtoDAO.buscarPorId(item.getProduto().getId());
+			int novoEstoque = produtoNoBanco.getQtde_estoque() - item.getQuantidade();
+			produtoDAO.atualizarEstoque(produtoNoBanco.getId(), novoEstoque);
+			carrinhoDAO.registrarItemCompra(usuarioLogado.getId(), produtoNoBanco.getId(), item.getQuantidade(),
+					produtoNoBanco.getPreco());
+
+			total += item.getSubtotal();
 			sb.append(item.getProduto().getNome_produto()).append(" x ").append(item.getQuantidade()).append(" = R$ ")
-					.append(String.format("%.2f", item.getSubtotal())).append("<br/>");
+					.append(String.format("%.2f", item.getSubtotal())).append("\n");
 		}
-		sb.append("</html>");
 
-		telaNotaFiscal.setNome(nf.getNome());
-		telaNotaFiscal.setCpf(nf.getCpf());
-		telaNotaFiscal.setProdutosTexto(sb.toString());
-		telaNotaFiscal.setTotal(nf.getTotal());
+		sb.append("--------------------\n");
+		sb.append("TOTAL: R$ ").append(String.format("%.2f", total));
+		JOptionPane.showMessageDialog(null, sb.toString());
 
-		JOptionPane.showMessageDialog(null, "Nota fiscal emitida!\nNome: " + nf.getNome() + "\nCPF: " + nf.getCpf()
-				+ "\nTotal: R$ " + String.format("%.2f", nf.getTotal()));
-
-		carrinho.limpar();
-		recarregarProdutos(tela, supermercado);
+		carrinhoDAOCompartilhado.limparCarrinho(carrinho);
+		recarregarProdutos(tela);
 		atualizarCarrinho(tela);
-		navegador.navegarPara(LoginController.TELA_NOTA_FISCAL);
 	}
 }
 
