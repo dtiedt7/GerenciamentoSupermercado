@@ -10,7 +10,6 @@ import java.util.List;
 import database.BancoDeDados;
 
 public class ProdutoDAO {
-	// CREATE - Adicionar um novo produto
     public void adicionarProduto(Produto produto) {
         String sql = "INSERT INTO Produtos (nome_produto, preco, qtde_estoque, descricao) VALUES (?, ?, ?, ?)";
         Connection conexao = null;
@@ -39,7 +38,6 @@ public class ProdutoDAO {
         }
     }
 
-    // READ - Listar todos os produtoss
     public List<Produto> listarProdutos() {
         String sql = "SELECT id, nome_produto, preco, qtde_estoque, descricao FROM Produtos ORDER BY nome_produto";
         List<Produto> produtos = new ArrayList<>();
@@ -74,7 +72,6 @@ public class ProdutoDAO {
         return produtos;
     }
 
-    // UPDATE - Atualizar um produto existente
     public void atualizarProduto(Produto produto) {
         String sql = "UPDATE Produtos SET nome_produto = ?, preco = ?, qtde_estoque = ?, descricao = ? WHERE id = ?";
         Connection conexao = null;
@@ -152,7 +149,6 @@ public class ProdutoDAO {
     	return null;
     }
 
-    // DELETE - Excluir um produto pelo ID
     public void excluirProduto(int id) {
         String sql = "DELETE FROM Produtos WHERE id = ?";
         Connection conexao = null;

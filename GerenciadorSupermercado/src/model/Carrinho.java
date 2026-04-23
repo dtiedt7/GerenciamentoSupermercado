@@ -77,7 +77,7 @@ public class Carrinho {
         for (Item item : itens) {
             total += item.getSubtotal();
         }
-        return total;
+        return total;	
     }
 
     public boolean isVazio() {

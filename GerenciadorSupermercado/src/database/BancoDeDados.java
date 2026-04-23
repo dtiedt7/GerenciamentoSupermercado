@@ -11,7 +11,7 @@ public class BancoDeDados {
     private static final String DEFAULT_SENHA = "admin";
     private static final String DRIVER = "com.mysql.cj.jdbc.Driver";
 
-    public static Connection conectar() {
+    public static Connection conectar() throws SQLException {
         try {
             Class.forName(DRIVER);
 
@@ -23,15 +23,9 @@ public class BancoDeDados {
 
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(
-                "Driver JDBC MySQL não encontrado. Adicione o mysql-connector-j ao Build Path do projeto.",
-                e
             );
-        } catch (SQLException e) {
-            throw new RuntimeException(
-                "Erro ao conectar ao banco de dados: " + e.getMessage(),
-                e
-            );
-        }
+        } 
+ 
     }
 
     public static void desconectar(Connection conexao) {

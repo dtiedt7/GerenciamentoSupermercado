@@ -148,7 +148,7 @@ public class CompraController implements ActionListener {
 		StringBuilder sb = new StringBuilder("NOTA FISCAL\n");
 		sb.append("Cliente: ").append(usuarioLogado.getNome()).append("\n");
 		sb.append("CPF: ").append(usuarioLogado.getCPF()).append("\n");
-		sb.append("--------------------\n");
+		sb.append("\n");
 
 		for (Carrinho.Item item : carrinho.getItens()) {
 			Produto produtoNoBanco = produtoDAO.buscarPorId(item.getProduto().getId());
@@ -171,7 +171,7 @@ public class CompraController implements ActionListener {
 					.append(String.format("%.2f", item.getSubtotal())).append("\n");
 		}
 
-		sb.append("--------------------\n");
+		sb.append("\n");
 		sb.append("TOTAL: R$ ").append(String.format("%.2f", total));
 		JOptionPane.showMessageDialog(null, sb.toString());
 
