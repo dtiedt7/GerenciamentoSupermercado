@@ -6,6 +6,9 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JRadioButton;
 import java.awt.Font;
+import java.awt.FontFormatException;
+import java.io.IOException;
+
 import javax.swing.JButton;
 import java.awt.Color;
 import javax.swing.ButtonGroup;
@@ -23,20 +26,31 @@ public class TelaCadastroUsuarios extends JPanel {
 
 	/**
 	 * Create the panel.
+	 * @throws IOException 
+	 * @throws FontFormatException 
 	 */
-	public TelaCadastroUsuarios() {
+	public TelaCadastroUsuarios() throws FontFormatException, IOException {
 		setBackground(new Color(141, 141, 141));
-		setLayout(new MigLayout("", "[grow][grow][grow][grow][grow]", "[grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow]"));
+		setLayout(new MigLayout("", "[grow][grow][grow][grow][grow]", "[grow][grow][grow][grow][grow][grow][grow][grow][grow][grow]"));
+		
+		Font fonte = Font.createFont(
+		        Font.TRUETYPE_FONT,
+		        getClass().getResourceAsStream("/estilizacao/Jomhuria-Regular.ttf")
+		).deriveFont(80f);
+		Font fonte1 = Font.createFont(
+		        Font.TRUETYPE_FONT,
+		        getClass().getResourceAsStream("/estilizacao/Jomhuria-Regular.ttf")
+		).deriveFont(40f);
 		
 		JLabel lbTitulo = new JLabel("Tela Cadastro");
 		lbTitulo.setForeground(new Color(225, 194, 19));
 		lbTitulo.setBackground(new Color(225, 194, 19));
-		lbTitulo.setFont(new Font("Tahoma", Font.PLAIN, 40));
+		lbTitulo.setFont(fonte);
 		add(lbTitulo, "cell 1 1 3 1,alignx center,growy");
 		
 		JLabel lbUsuario = new JLabel("Usuário");
 		lbUsuario.setForeground(new Color(225, 194, 19));
-		lbUsuario.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		lbUsuario.setFont(fonte1);
 		add(lbUsuario, "cell 1 3,alignx center,growy");
 		
 		tfUsuário = new JTextField();
@@ -46,40 +60,52 @@ public class TelaCadastroUsuarios extends JPanel {
 		
 		JLabel lbCPF = new JLabel("CPF");
 		lbCPF.setForeground(new Color(225, 194, 19));
-		lbCPF.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		add(lbCPF, "cell 1 5,alignx center,growy");
+		lbCPF.setFont(fonte1);
+		add(lbCPF, "cell 1 4,alignx center,growy");
 		
 		tfCPF = new JTextField();
 		tfCPF.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		add(tfCPF, "cell 3 5,growx");
+		add(tfCPF, "cell 3 4,growx");
 		tfCPF.setColumns(10);
 		
 		JLabel lbSenha = new JLabel("Senha");
 		lbSenha.setForeground(new Color(225, 194, 19));
-		lbSenha.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		add(lbSenha, "cell 1 6,alignx center,growy");
+		lbSenha.setFont(fonte1);
+		add(lbSenha, "cell 1 5,alignx center,growy");
 		
 		pfSenha = new JPasswordField();
 		pfSenha.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		add(pfSenha, "cell 3 6,growx");
+		add(pfSenha, "cell 3 5,growx");
 		
 		rbCliente = new JRadioButton("Cliente");
-		rbCliente.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		rbCliente.setForeground(new Color(225, 194, 19));
+		rbCliente.setFont(fonte1);
 		grupoTipo.add(rbCliente);
-		add(rbCliente, "cell 1 7,alignx center");
+		rbCliente.setOpaque(false);
+		rbCliente.setBorderPainted(false);
+		add(rbCliente, "cell 1 6,alignx center");
 		
 		rbAdministrador = new JRadioButton("Administrador");
-		rbAdministrador.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		rbAdministrador.setForeground(new Color(225, 194, 19));
+		rbAdministrador.setFont(fonte1);
 		grupoTipo.add(rbAdministrador);
-		add(rbAdministrador, "cell 3 7,alignx center");
+		rbAdministrador.setOpaque(false);
+		rbAdministrador.setBorderPainted(false);
+		add(rbAdministrador, "cell 3 6,alignx center");
 		
 		btVoltar = new JButton("Tela de Login");
-		btVoltar.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		add(btVoltar, "cell 1 9,alignx center");
+		btVoltar.setBackground(new Color(225, 194, 19));
+		btVoltar.setFont(fonte1);
+		btVoltar.setOpaque(true);
+		btVoltar.setBorderPainted(false);
+		add(btVoltar, "cell 1 8,alignx center");
 		
 		btCadastrar = new JButton("Cadastrar Usuário");
-		btCadastrar.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		add(btCadastrar, "cell 3 9,growx");
+		btCadastrar.setBackground(new Color(225, 194, 19));
+		btCadastrar.setFont(fonte1);
+		btCadastrar.setOpaque(true);
+		btCadastrar.setBorderPainted(false);
+		add(btCadastrar, "cell 3 8,growx");
 
 	}
 	
