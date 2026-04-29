@@ -103,19 +103,23 @@ public class TelaCadastroProdutos extends JPanel {
 		add(scrollPane, "cell 1 11 3 1,grow");
 		
 		btAdicionar = new JButton("Adicionar");
+		btAdicionar.setBackground(new Color(225, 194, 19));
 		btAdicionar.setForeground(new Color(0, 0, 0));
 		add(btAdicionar, "cell 1 13,alignx center,growy");
 		btAdicionar.setFont(fonte1);
 		
 		btEditar = new JButton("Editar");
+		btEditar.setBackground(new Color(225, 194, 19));
 		add(btEditar, "cell 2 13,alignx center,growy");
 		btEditar.setFont(fonte1);
 		
 		btRemover = new JButton("Remover");
+		btRemover.setBackground(new Color(225, 194, 19));
 		add(btRemover, "cell 3 13,alignx center,growy");
 		btRemover.setFont(fonte1);
 		
 		btDeslogar = new JButton("Deslogar");
+		btDeslogar.setBackground(new Color(225, 194, 19));
 		add(btDeslogar, "cell 1 14,alignx left");
 		btDeslogar.setFont(fonte1);
 
