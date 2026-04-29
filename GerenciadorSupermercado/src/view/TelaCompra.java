@@ -4,6 +4,8 @@ import javax.swing.JPanel;
 import net.miginfocom.swing.MigLayout;
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.awt.FontFormatException;
+import java.io.IOException;
 import java.awt.BorderLayout;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -22,14 +24,25 @@ public class TelaCompra extends JPanel {
 
 	/**
 	 * Create the panel.
+	 * @throws IOException 
+	 * @throws FontFormatException 
 	 */
-	public TelaCompra() {
+	public TelaCompra() throws FontFormatException, IOException {
 		setBackground(new Color(141, 141, 141));
 		setLayout(new MigLayout("", "[grow][grow][grow][grow][grow]", "[grow][grow][grow][grow][grow][grow][grow]"));
 		
+		Font fonte = Font.createFont(
+		        Font.TRUETYPE_FONT,
+		        getClass().getResourceAsStream("/estilizacao/Jomhuria-Regular.ttf")
+		).deriveFont(80f);
+		Font fonte1 = Font.createFont(
+		        Font.TRUETYPE_FONT,
+		        getClass().getResourceAsStream("/estilizacao/Jomhuria-Regular.ttf")
+		).deriveFont(30f);
+		
 		JLabel lbTitulo = new JLabel("Compra");
 		lbTitulo.setForeground(new Color(225, 194, 19));
-		lbTitulo.setFont(new Font("Tahoma", Font.PLAIN, 40));
+		lbTitulo.setFont(fonte);
 		add(lbTitulo, "cell 1 1 3 1,alignx center,growy");
 		
 		JPanel panel = new JPanel();
@@ -67,21 +80,25 @@ public class TelaCompra extends JPanel {
 		panel_1.add(new JScrollPane(tabelaCarrinho), BorderLayout.CENTER);
 		
 		lbTotalCompra = new JLabel("Total: R$ 0.00");
-		lbTotalCompra.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lbTotalCompra.setFont(fonte1);
 		lbTotalCompra.setForeground(new Color(225, 194, 19));
 		add(lbTotalCompra, "cell 3 4,alignx right");
 		
 		btAdicionar = new JButton("Adicionar");
 		add(btAdicionar, "cell 1 5,alignx center,growy");
+		btAdicionar.setFont(fonte1);
 		
 		btRemover = new JButton("Remover");
 		add(btRemover, "cell 2 5,alignx center,growy");
+		btRemover.setFont(fonte1);
 		
 		btFinalizarCompra = new JButton("Finalizar Compra");
 		add(btFinalizarCompra, "cell 3 5,alignx center,growy");
+		btFinalizarCompra.setFont(fonte1);
 		
 		btDeslogar = new JButton("Deslogar");
 		add(btDeslogar, "cell 1 6,alignx left");
+		btDeslogar.setFont(fonte1);
 
 	}
 	

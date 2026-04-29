@@ -4,6 +4,9 @@ import javax.swing.JPanel;
 import net.miginfocom.swing.MigLayout;
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.awt.FontFormatException;
+import java.io.IOException;
+
 import javax.swing.JTextField;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -26,20 +29,31 @@ public class TelaCadastroProdutos extends JPanel {
 
 	/**
 	 * Create the panel.
+	 * @throws IOException 
+	 * @throws FontFormatException 
 	 */
-	public TelaCadastroProdutos() {
+	public TelaCadastroProdutos() throws FontFormatException, IOException {
 		setBackground(new Color(141, 141, 141));
 		setLayout(new MigLayout("", "[grow][grow][grow][grow][grow]", "[grow70][grow70][grow70][grow70][grow70][grow70][grow70][grow70][grow70][grow70][grow70][grow][grow70][grow70][grow70]"));
+		
+		Font fonte = Font.createFont(
+		        Font.TRUETYPE_FONT,
+		        getClass().getResourceAsStream("/estilizacao/Jomhuria-Regular.ttf")
+		).deriveFont(80f);
+		Font fonte1 = Font.createFont(
+		        Font.TRUETYPE_FONT,
+		        getClass().getResourceAsStream("/estilizacao/Jomhuria-Regular.ttf")
+		).deriveFont(40f);
 		
 		JLabel lbTitulo = new JLabel("Cadastro de Produtos");
 		lbTitulo.setForeground(new Color(225, 194, 19));
 		lbTitulo.setBackground(new Color(225, 194, 19));
-		lbTitulo.setFont(new Font("Tahoma", Font.PLAIN, 40));
+		lbTitulo.setFont(fonte);
 		add(lbTitulo, "cell 1 1 3 1,alignx center,growy");
 		
 		JLabel lblNewLabel = new JLabel("Produto");
 		lblNewLabel.setForeground(new Color(225, 194, 19));
-		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblNewLabel.setFont(fonte1);
 		add(lblNewLabel, "cell 1 3,alignx right");
 		
 		tfProduto = new JTextField();
@@ -49,7 +63,7 @@ public class TelaCadastroProdutos extends JPanel {
 		
 		JLabel lblNewLabel_1 = new JLabel("Preço em R$");
 		lblNewLabel_1.setForeground(new Color(225, 194, 19));
-		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblNewLabel_1.setFont(fonte1);
 		add(lblNewLabel_1, "cell 1 5,alignx right");
 		
 		tfPreco = new JTextField();
@@ -59,19 +73,21 @@ public class TelaCadastroProdutos extends JPanel {
 		
 		JLabel lblNewLabel_2 = new JLabel("Descrição");
 		lblNewLabel_2.setForeground(new Color(225, 194, 19));
-		lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblNewLabel_2.setFont(fonte1);
 		add(lblNewLabel_2, "cell 1 7,alignx right");
 		
 		tfDescricao = new JTextField();
+		tfDescricao.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		add(tfDescricao, "cell 3 7,growx");
 		tfDescricao.setColumns(10);
 		
 		JLabel lblNewLabel_3 = new JLabel("Qtde. Estoque");
 		lblNewLabel_3.setForeground(new Color(225, 194, 19));
-		lblNewLabel_3.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblNewLabel_3.setFont(fonte1);
 		add(lblNewLabel_3, "cell 1 9,alignx right");
 		
 		tfEstoque = new JTextField();
+		tfEstoque.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		add(tfEstoque, "cell 3 9,growx");
 		tfEstoque.setColumns(10);
 		
@@ -89,15 +105,19 @@ public class TelaCadastroProdutos extends JPanel {
 		btAdicionar = new JButton("Adicionar");
 		btAdicionar.setForeground(new Color(0, 0, 0));
 		add(btAdicionar, "cell 1 13,alignx center,growy");
+		btAdicionar.setFont(fonte1);
 		
 		btEditar = new JButton("Editar");
 		add(btEditar, "cell 2 13,alignx center,growy");
+		btEditar.setFont(fonte1);
 		
 		btRemover = new JButton("Remover");
 		add(btRemover, "cell 3 13,alignx center,growy");
+		btRemover.setFont(fonte1);
 		
 		btDeslogar = new JButton("Deslogar");
 		add(btDeslogar, "cell 1 14,alignx left");
+		btDeslogar.setFont(fonte1);
 
 	}
 	

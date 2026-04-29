@@ -1,6 +1,8 @@
 package main;
 
 import java.awt.Font;
+import java.awt.FontFormatException;
+import java.io.IOException;
 
 import javax.swing.UIManager;
 import javax.swing.plaf.FontUIResource;
@@ -20,7 +22,7 @@ import view.TelaCompra;
 import view.TelaLogin;
 
 public class Main {
-	public static void main(String[] args) {
+	public static void main(String[] args) throws FontFormatException, IOException {
 		UIManager.put("OptionPane.messageFont",
 				new FontUIResource(new Font("Arial", Font.PLAIN, 18)));
 
