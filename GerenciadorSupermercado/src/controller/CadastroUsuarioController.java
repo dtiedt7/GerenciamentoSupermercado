@@ -47,9 +47,22 @@ public class CadastroUsuarioController implements ActionListener {
 				return;
 			}
 
-			usuarioDAO.adicionarUsuario(new Usuario(nome.trim(), cpf.trim(), admin, senha));
-			JOptionPane.showMessageDialog(null, "Usuário cadastrado com sucesso.");
-			navegador.navegarPara(LoginController.TELA_LOGIN);
+			try {
+
+			    usuarioDAO.adicionarUsuario(
+			        new Usuario(nome.trim(), cpf.trim(), admin, senha)
+			    );
+
+			    JOptionPane.showMessageDialog(null, "Usuário cadastrado com sucesso."
+			    );
+
+			    navegador.navegarPara(LoginController.TELA_LOGIN);
+
+			} catch (RuntimeException ex) {
+
+			    JOptionPane.showMessageDialog(null, ex.getMessage(),"Erro", JOptionPane.ERROR_MESSAGE
+			    );
+			}
 		}
 	}
 }

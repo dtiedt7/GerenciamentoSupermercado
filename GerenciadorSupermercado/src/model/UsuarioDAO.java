@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,6 +33,8 @@ public class UsuarioDAO {
 
             pstm.executeUpdate();
 
+        }catch (SQLIntegrityConstraintViolationException e) {
+            throw new RuntimeException("CPF já cadastrado."); 
         } catch (SQLException e) {
             throw new RuntimeException("Erro ao adicionar usuário: " + e.getMessage(), e);
         } finally {
