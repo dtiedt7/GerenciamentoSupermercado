@@ -4,7 +4,7 @@ USE mydb;
 
 CREATE TABLE Produtos (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    nome_produto VARCHAR(100) NOT NULL,
+    nome_produto VARCHAR(100) UNIQUE NOT NULL,
     preco DECIMAL(10,2) NOT NULL,
     qtde_estoque INT NOT NULL,
     descricao VARCHAR(255)

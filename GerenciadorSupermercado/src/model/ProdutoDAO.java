@@ -168,5 +168,28 @@ public class ProdutoDAO {
             }
         }
     }
+    
+    public boolean produtoExiste(String nome) {
+        String sql = "SELECT COUNT(*) FROM Produtos WHERE nome_produto = ?";
+
+        try (
+            Connection conn = BancoDeDados.conectar();
+            PreparedStatement pstm = conn.prepareStatement(sql)
+        ) {
+
+            pstm.setString(1, nome);
+
+            ResultSet rs = pstm.executeQuery();
+
+            if (rs.next()) {
+                return rs.getInt(1) > 0;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
 }
 

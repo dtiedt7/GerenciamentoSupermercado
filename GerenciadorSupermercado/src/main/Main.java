@@ -23,8 +23,8 @@ import view.TelaLogin;
 
 public class Main {
 	public static void main(String[] args) throws FontFormatException, IOException {
-		UIManager.put("OptionPane.messageFont",
-				new FontUIResource(new Font("Arial", Font.PLAIN, 18)));
+		
+		UIManager.put("OptionPane.messageFont", new FontUIResource(new Font("Arial", Font.PLAIN, 18)));
 
 		Janela janela = new Janela();
 		Navegador navegador = new Navegador(janela);

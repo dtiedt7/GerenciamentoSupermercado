@@ -90,6 +90,13 @@ public class ProdutosController implements ActionListener {
 				JOptionPane.showMessageDialog(null, "Informe o nome do produto.", "Erro", JOptionPane.ERROR_MESSAGE);
 				return;
 			}
+			
+			if (produtoDAO.produtoExiste(nome.trim())) {
+			    JOptionPane.showMessageDialog(null,
+			        "Já existe um produto com esse nome.");
+
+			    return;
+			}
 			produtoDAO.adicionarProduto(new Produto(nome.trim(), preco, estoque, desc == null ? "" : desc.trim()));
 			JOptionPane.showMessageDialog(null, "Produto cadastrado com sucesso.");
 			carregarTabela(tela);

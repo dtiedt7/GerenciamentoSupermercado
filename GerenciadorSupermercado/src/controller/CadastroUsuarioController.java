@@ -46,6 +46,10 @@ public class CadastroUsuarioController implements ActionListener {
 				JOptionPane.showMessageDialog(null, "Informe uma senha.", "Erro", JOptionPane.ERROR_MESSAGE);
 				return;
 			}
+			if (cpf.length() >11 || cpf.length()<11) {
+				JOptionPane.showMessageDialog(null, "CPF deve ter 11 digitos.", "Erro", JOptionPane.ERROR_MESSAGE);
+				return;
+			}
 
 			try {
 
