@@ -28,8 +28,8 @@ public class CadastroUsuarioController implements ActionListener {
 			return;
 		}
 		if (src == tela.getBtCadastrar()) {
-			String nome = tela.getTfUsuário().getText();
-			String cpf = tela.getTfCPF().getText();
+			String nome = tela.getTfUsuario().getText();
+			String cpf = tela.getCPF();
 			String senha = new String(tela.getPfSenha().getPassword());
 			boolean admin = tela.getRbAdministrador().isSelected();
 			boolean cliente = tela.getRbCliente().isSelected();
