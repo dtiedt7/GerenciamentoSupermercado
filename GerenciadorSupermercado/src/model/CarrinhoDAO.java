@@ -37,6 +37,35 @@ public class CarrinhoDAO {
             }
         }
     }
+    
+    public void removerProdutoDoCarrinho(int produtoId) {
+        String sql = "DELETE FROM Carrinho WHERE produto_id = ?";
+
+        Connection conexao = null;
+        PreparedStatement pstm = null;
+
+        try {
+            conexao = BancoDeDados.conectar();
+
+            pstm = conexao.prepareStatement(sql);
+            pstm.setInt(1, produtoId);
+
+            pstm.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            BancoDeDados.desconectar(conexao);
+
+            if (pstm != null) {
+                try {
+                    pstm.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
 
     public void limparCarrinho(Carrinho carrinho) {
         if (carrinho != null) {

@@ -7,6 +7,7 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
+import model.CarrinhoDAO;
 import model.Produto;
 import model.ProdutoDAO;
 import model.Usuario;
@@ -127,13 +128,26 @@ public class ProdutosController implements ActionListener {
 
 	private void remover() {
 		Integer id = idSelecionado();
+
 		if (id == null) {
-			JOptionPane.showMessageDialog(null, "Selecione um produto na tabela.", "Erro", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null,
+					"Selecione um produto na tabela.",
+					"Erro",
+					JOptionPane.ERROR_MESSAGE);
 			return;
 		}
+
+		CarrinhoDAO carrinhoDAO = new CarrinhoDAO();
+
+		carrinhoDAO.removerProdutoDoCarrinho(id);
+
 		produtoDAO.excluirProduto(id);
-		JOptionPane.showMessageDialog(null, "Produto removido com sucesso.");
+
+		JOptionPane.showMessageDialog(null,
+				"Produto removido com sucesso.");
+
 		carregarTabela(tela);
 	}
 }
+
 
